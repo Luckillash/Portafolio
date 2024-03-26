@@ -1,229 +1,85 @@
-import { useEffect } from 'react';
-import * as THREE from 'three';
-import { Canvas, useFrame,  } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import anime from 'animejs';
+import Inicio from './inicio/index';
 
-import Loader from './Loader';
-import Inicio from './Inicio';
-import Portafolio from './Portafolio';
-import Contacto from './Contacto';
+import Portafolio from './portafolio';
 
-import Arco from './componentes/Arco';
-import Estrellas from './componentes/Estrellas';
-import Octahedro from './componentes/Octahedro';
+import Proyectos from './proyectos';
+
+import Three from './three';
 
 export default function App() {
 
-    let Posicion = 0
-
-    const Camara = () => {
-
-        const Inicio = new THREE.Vector3(0,3,20)
-
-        const Portafolio = new THREE.Vector3(-50,100,20)
-
-        const SobreMi =  new THREE.Vector3(-30,3,20)
-
-        useFrame((state) => {
-
-            if (Posicion === 0) {
-
-                const Direccion = state.camera.position.lerp(Inicio, .01)
-    
-                state.camera.lookAt(Direccion)
-
-            }
-
-            else if (Posicion === 1) {
-
-                const Direccion = state.camera.position.lerp(Portafolio, .01)
-    
-                state.camera.lookAt(Direccion)
-            }
-
-            else if (Posicion === 2) {
-
-                const Direccion = state.camera.position.lerp(SobreMi, .01)
-
-                state.camera.lookAt(Direccion)
-                
-            }
-
-        });
-
-        return <> </>
-
-    }
-
-    function MostrarPantallaCarga () {
-
-        anime({
-
-            targets: '#Pagina',
-
-            translateX: "0%",
-
-            translateY: "0%",
-
-            easing: "easeInOutQuad",
-
-            duration: 1500,
-
-            direction: 'linear',
-
-        });
-
-    }
-
-    function MostrarInicio () {
-
-        MostrarPantallaCarga()
-
-        Posicion = 0
-
-        setTimeout(() => {
-
-
-            anime({
-
-                targets: '#Pagina',
-    
-                translateX: "-100%",
-    
-                easing: "linear",
-    
-                duration: 1500,
-    
-                direction: 'linear',
-    
-            });
-
-
-        }, 2500)
-
-    }
-
-    function MostrarPortafolio () {
-
-        MostrarPantallaCarga()
-
-        Posicion = 1
-
-        setTimeout(() => {
-
-            anime({
-
-                targets: '#Pagina',
-    
-                translateY: "100%",
-    
-                easing: "linear",
-    
-                duration: 1500,
-    
-                direction: 'linear',
-    
-            });
-
-
-        }, 2500)
-
-    }
-
-    function MostrarContacto () {
-
-        MostrarPantallaCarga()
-
-        Posicion = 2
-
-        setTimeout(() => {
-
-            anime({
-
-                targets: '#Pagina',
-    
-                translateX: "100%",
-    
-                easing: "easeInOutQuad",
-    
-                duration: 1500,
-    
-                direction: 'linear',
-    
-            });
-
-        }, 2500)
-
-    }
-
-    useEffect(() => {
-
-        setTimeout(() => {
-
-            anime({
-
-                targets: '#Pagina',
-
-                translateX: "-100%",
-
-                easing: "easeInOutQuad",
-
-                duration: 1500,
-
-                direction: 'linear',
-
-            });
-
-        }, 2000)
-
-    }, [])
-
     return (
 
-        <div className="h-screen w-screen">
+        <div>
 
-            <Canvas
+            <Three />
+
+            <Inicio />
+
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden rotate-180">
+
+                <svg 
+
+                    className="relative block h-[98px] divider"
+                
+                    data-name="Layer 1" 
+                    
+                    xmlns="http://www.w3.org/2000/svg" 
+                    
+                    viewBox="0 0 1200 120" 
+                    
+                    preserveAspectRatio="none"
+                    
+                >
+                    
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-[#080b12]"></path>
+                
+                </svg>
+
+            </div> 
+
+
+                {/* <svg 
+                
+                    className='absolute top-0 left-0 w-full h-full' 
+                    
+                    preserveAspectRatio="none" 
+                    
+                    id="visual" 
+                    
+                    viewBox="0 0 960 540" 
+                    
+                    width="960" 
+                    
+                    height="540" 
+                    
+                    xmlns="http://www.w3.org/2000/svg" 
+                    
+                    xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1"
+                    
+                >
+                    
+                    <path d="M0 437L14.5 439C29 441 58 445 87.2 441C116.3 437 145.7 425 174.8 423.3C204 421.7 233 430.3 262 433.5C291 436.7 320 434.3 349 433.8C378 433.3 407 434.7 436.2 438.7C465.3 442.7 494.7 449.3 523.8 450C553 450.7 582 445.3 611 438.3C640 431.3 669 422.7 698 419.5C727 416.3 756 418.7 785.2 421C814.3 423.3 843.7 425.7 872.8 430.2C902 434.7 931 441.3 945.5 444.7L960 448L960 541L945.5 541C931 541 902 541 872.8 541C843.7 541 814.3 541 785.2 541C756 541 727 541 698 541C669 541 640 541 611 541C582 541 553 541 523.8 541C494.7 541 465.3 541 436.2 541C407 541 378 541 349 541C320 541 291 541 262 541C233 541 204 541 174.8 541C145.7 541 116.3 541 87.2 541C58 541 29 541 14.5 541L0 541Z" fill="#3f355a"></path>
+                    
+                    <path d="M0 477L14.5 470.2C29 463.3 58 449.7 87.2 445C116.3 440.3 145.7 444.7 174.8 448.8C204 453 233 457 262 457.5C291 458 320 455 349 457C378 459 407 466 436.2 464.8C465.3 463.7 494.7 454.3 523.8 451.3C553 448.3 582 451.7 611 453.5C640 455.3 669 455.7 698 458C727 460.3 756 464.7 785.2 466.2C814.3 467.7 843.7 466.3 872.8 462.5C902 458.7 931 452.3 945.5 449.2L960 446L960 541L945.5 541C931 541 902 541 872.8 541C843.7 541 814.3 541 785.2 541C756 541 727 541 698 541C669 541 640 541 611 541C582 541 553 541 523.8 541C494.7 541 465.3 541 436.2 541C407 541 378 541 349 541C320 541 291 541 262 541C233 541 204 541 174.8 541C145.7 541 116.3 541 87.2 541C58 541 29 541 14.5 541L0 541Z" fill="#372b46"></path>
+                    
+                    <path d="M0 491L14.5 486.3C29 481.7 58 472.3 87.2 469.3C116.3 466.3 145.7 469.7 174.8 473.8C204 478 233 483 262 481.8C291 480.7 320 473.3 349 470.2C378 467 407 468 436.2 467.5C465.3 467 494.7 465 523.8 469.8C553 474.7 582 486.3 611 491.2C640 496 669 494 698 490.8C727 487.7 756 483.3 785.2 481.2C814.3 479 843.7 479 872.8 480.8C902 482.7 931 486.3 945.5 488.2L960 490L960 541L945.5 541C931 541 902 541 872.8 541C843.7 541 814.3 541 785.2 541C756 541 727 541 698 541C669 541 640 541 611 541C582 541 553 541 523.8 541C494.7 541 465.3 541 436.2 541C407 541 378 541 349 541C320 541 291 541 262 541C233 541 204 541 174.8 541C145.7 541 116.3 541 87.2 541C58 541 29 541 14.5 541L0 541Z" fill="#2d2234"></path>
+                    
+                    <path d="M0 505L14.5 506.8C29 508.7 58 512.3 87.2 514.8C116.3 517.3 145.7 518.7 174.8 518.3C204 518 233 516 262 511.7C291 507.3 320 500.7 349 499.7C378 498.7 407 503.3 436.2 503.8C465.3 504.3 494.7 500.7 523.8 499.2C553 497.7 582 498.3 611 500.3C640 502.3 669 505.7 698 506.2C727 506.7 756 504.3 785.2 504.7C814.3 505 843.7 508 872.8 509.5C902 511 931 511 945.5 511L960 511L960 541L945.5 541C931 541 902 541 872.8 541C843.7 541 814.3 541 785.2 541C756 541 727 541 698 541C669 541 640 541 611 541C582 541 553 541 523.8 541C494.7 541 465.3 541 436.2 541C407 541 378 541 349 541C320 541 291 541 262 541C233 541 204 541 174.8 541C145.7 541 116.3 541 87.2 541C58 541 29 541 14.5 541L0 541Z" fill="#211a23"></path>
+                
+                </svg> */}
+
             
-            camera={{
 
-                position: [0, -100, 0]
+            <Portafolio />
 
-            }}
-            
-            >
+            <Proyectos />
 
-                <Camara />
 
-                <OrbitControls />
+            {/* <Contacto />  */}
 
-                <ambientLight intensity={1} />
+            {/* <Loader /> */}
 
-                <directionalLight color="none" position={[0, 0, 5]} />
-
-                <Arco />
-
-                <Octahedro />
-
-                { Estrellas.map((Estrella, Index) => {
-
-                    const { x, y, z } = Estrella.position
-
-                    return <mesh key={Index} args={[Estrella.geometry, Estrella.material]} position={[x,y,z]} />
-
-                })}
-
-                <color attach="background" args={['#000']} />
-
-            </Canvas>
-
-            <Loader />
-
-            <Inicio MostrarPortafolio={MostrarPortafolio} MostrarContacto={MostrarContacto} />
-
-            <Portafolio MostrarInicio={MostrarInicio} MostrarContacto={MostrarContacto} />
-
-            <Contacto MostrarInicio={MostrarInicio} MostrarPortafolio={MostrarPortafolio} />
 
         </div>
 
